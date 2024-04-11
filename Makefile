@@ -7,6 +7,9 @@ ifeq ($(wildcard $(LIBSSH_INCLUDE)),)
 	LIBSSH_INCLUDE = $(LIBSSH_INCLUDE2)
 endif
 
+CXX ?= g++
+CXXFLAGS ?= -Wall
+
 .PHONY=default sshping man
 
 default: sshping
@@ -14,7 +17,7 @@ default: sshping
 sshping: bin/sshping
 
 bin/sshping: src/sshping.cxx $(LIBSSH_INCLUDE)
-	g++ -Wall -I ext/ -o bin/sshping src/sshping.cxx -lssh
+	$(CXX) $(CXXFLAGS) -I ext/ -o bin/sshping src/sshping.cxx -lssh
 
 $(LIBSSH_INCLUDE):
 	echo '*** Please install libssh-dev, libssh-devel, or similar package'
